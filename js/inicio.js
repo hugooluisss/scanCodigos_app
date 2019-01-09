@@ -17,7 +17,9 @@
  * under the License.
  */
 var objUsuario = null;
+var db = null;
 var plantillas = {};
+
 var app = {
 	// Application Constructor
 	initialize: function() {
@@ -35,7 +37,16 @@ var app = {
 	// The scope of 'this' is the event. In order to call the 'receivedEvent'
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
-		//activarNotificaciones();
+		try{
+			db = window.sqlitePlugin.openDatabase({name: 'scan.db', location: 1, androidDatabaseImplementation: 2});
+			console.log("Conexión desde phonegap OK");
+			crearBD(db);
+		}catch(err){
+			alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
+			db = window.openDatabase("scan.db", "1.0", "Just a Dummy DB", 200000);
+			crearBD(db);
+			console.log("Se inicio la conexión a la base para web");
+		}
 	}
 };
 
@@ -49,10 +60,9 @@ $(document).ready(function(){
 	
 	plantillas["index"] = "";
 	plantillas["login"] = "";
-	plantillas["registro"] = "";
 	
 	getPlantillas(function(){
-		callRegistro();
+		callLogin();
 	});
 	//app.onDeviceReady();
 });
@@ -64,9 +74,6 @@ function callPanel(panel){
 		break;
 		case 'index':
 			callIndex();
-		break;
-		case 'registro':
-			callRegistro();
 		break;
 		default:
 			console.info("Panel no encontrado");

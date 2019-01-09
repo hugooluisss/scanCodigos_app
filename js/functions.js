@@ -1,9 +1,8 @@
 server = "http://dashboard.nomastenencias.com/";
-//server = "http://192.168.2.2/crm_gestor/";
+server = "http://192.168.2.2/scanCodigos/";
 //server = "http://localhost/crm_gestor/";
 
 var idUsuario = undefined;
-var publicConekta = "key_Zqr2ZkSGqeYMdaraabxVHww";
 /*
 *
 * Centra verticalmente una ventana modal
@@ -158,22 +157,21 @@ function getPlantillas(after){
 	});
 };
 
-
-function activarNotificaciones(fn){
-	window.plugins.PushbotsPlugin.initialize("5bcf96b469b5ee396a35300b", {
-		"android":{
-			"sender_id":"580777664404",
-			"icon": "icon",
-			"iconColor": "#FFFFFF"
-		}
+function crearBD(){
+	db.transaction(function(tx){
+		//tx.executeSql('drop table if exists fuerza');
+		
+		tx.executeSql('CREATE TABLE IF NOT EXISTS fuerza (idFuerza primary key, clave text, nombre text, visible integer)', [], function(){
+			console.log("tabla tienda creada");
+		}, errorDB);
+		
+		//tx.executeSql('drop table codigo');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS codigo (idVenta integer primary key, idFuerza integer, fecha datetime, iccid text imei text, dni text, foreign key(idFuerza) references fuerza(idFuerza))', [], function(){
+			console.log("tabla codigos creada");
+		}, errorDB);
 	});
-	
-	//window.plugins.PushbotsPlugin.debug(true);
-	
-	window.plugins.PushbotsPlugin.resetBadge();
-	window.plugins.PushbotsPlugin.toggleNotifications(true);
-	window.plugins.PushbotsPlugin.setAlias("usuario_" + objUsuario.idUsuario);
-	
-	if (fn.after !== undefined)
-		fn.after();
+}
+
+function errorDB(tx, res){
+	console.log("Error: " + res.message);
 }

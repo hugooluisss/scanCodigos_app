@@ -2,16 +2,10 @@ body[layout="home"]{
 	background: @grisClaro;
 	
 	#menuPrincipal{
-		//background: url(@bgNav);
-		//background: @rojo2;
 		background: white;
-		background-position: center bottom;
-		background-repeat: no-repeat;
-		background-size: cover;
-		border-bottom: 2px solid red;
 		
 		#tituloModulo{
-			color: @color4;
+			color: @color1;
 			font-family: 'Varela Round', sans-serif;
 			text-transform: uppercase;
 			font-size: 14px;
@@ -23,13 +17,13 @@ body[layout="home"]{
 		}
 		
 		a{
-			color: @rojo;
+			color: @color1;
 		}
 		
 		button{
-			color: @rojo;
+			color: @color1;
 			span{
-				color: @rojo;
+				color: @color1;
 			}
 			
 			border: none;
@@ -45,52 +39,12 @@ body[layout="home"]{
 	
 	#modulo{
 		padding-top: 60px;
-		//padding-left: 5px;
-		//padding-right: 5px;
-		//background: @grisClaro;
 		
 		height: 100%;
 		
 		overflow-y: scroll;
 		margin-bottom: 10px;
 	}
-	/*
-	#pie{
-		position: fixed;
-		bottom: 0px;
-		width: 100%;
-		height: @altoPie;
-		border-top: 1px solid @grisClaro;
-		color: white;
-		padding-top: 10px;
-		background: @bgPie;
-		background: url("../img/bghome.jpg");
-		
-		.row{
-			justify-content: center;
-			.boton{
-				text-align: center;
-				margin: auto;
-				i{
-					margin: auto;
-				}
-				
-				span{
-					font-size: 10px;
-					display: block;
-					margin: auto;
-				}
-			}
-		}
-	}
-	*/
+
 	@import "modulos/home.less";
-	@import "modulos/detalleAuto.less";
-	@import "modulos/ordenes.less";
-	@import "modulos/detalleOrden.less";
-	@import "modulos/autos.less";
-	@import "modulos/solicitar.less";
-	@import "modulos/tramites.less";
-	@import "modulos/detalleTramite.less";
-	@import "modulos/perfil.less";
 }

@@ -6,15 +6,10 @@ function callIndex(){
 
 function callLogout(){
 	try{
-		window.localStorage.removeItem("session_crm");
-		window.localStorage.removeItem("session");
-		
-		//window.plugins.PushbotsPlugin.removeTags(["transporitsta"]);
-		window.plugins.PushbotsPlugin.removeAlias();
+		window.localStorage.removeItem("session_scanCodigos");
 		location.href = "index.html";
 	}catch(error){
-		window.localStorage.removeItem("session_crm");
-		window.localStorage.removeItem("session");
+		window.localStorage.removeItem("session_scanCodigos");
 		location.href = "index.html";
 	}
 }

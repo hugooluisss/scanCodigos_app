@@ -1,6 +1,5 @@
 body[layout="login"]{
-	//.degradadoTopBottom(white, @bgColor 40%);
-	background-image: url(@bgLogin);
+	.degradadoTopBottom(@bgDegradado1, @bgDegradado2 40%);
 	background-color: black;
 	background-position: center bottom;
 	background-repeat: no-repeat;
@@ -14,9 +13,11 @@ body[layout="login"]{
 	}
 	
 	input{
-		border: 2px solid @rojo;
 		.bordesRedondos(50px);
-		box-shadow: 2px 2px 5px @rojo;
+	}
+	
+	#frmLogin{
+		margin-top: 60px;
 	}
 	
 	footer{
@@ -34,9 +35,10 @@ body[layout="login"]{
 	
 	
 	label.validateError{
-		color: white;
+		color: red;
 		margin-bottom: 0px;
-		font-size: 14px;
+		font-size: 13px;
+		padding-left: 10px;
 	}
 	
 	input.validateError{
