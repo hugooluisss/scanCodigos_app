@@ -31,7 +31,6 @@ function callHome(){
 			});
 		});
 	}
-	getFuerza();
 	
 	$("#btnSincronizarCatalogos").click(function(){
 		sincronizarCatalogos();
