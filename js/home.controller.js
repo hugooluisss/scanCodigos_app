@@ -20,15 +20,18 @@ function callHome(){
     	});
 	});
 	
-	$("#selFuerza").find("option").remove();
-	db.transaction(function(tx){
-		tx.executeSql('select * from fuerza where visible = 1', [], function(tx, results){
-			for(var i = 0; i < results.rows.length ; i++){
-				$("#selFuerza").append('<option value="' + results.rows.item(i).idFuerza + '">' + results.rows.item(i).nombre + "</option");
-			}
-		});
-	});
 	
+	function getFuerza(){
+		$("#selFuerza").find("option").remove();
+		db.transaction(function(tx){
+			tx.executeSql('select * from fuerza where visible = 1', [], function(tx, results){
+				for(var i = 0; i < results.rows.length ; i++){
+					$("#selFuerza").append('<option value="' + results.rows.item(i).idFuerza + '">' + results.rows.item(i).nombre + "</option");
+				}
+			});
+		});
+	}
+	getFuerza();
 	
 	$("#btnSincronizarCatalogos").click(function(){
 		sincronizarCatalogos();
@@ -54,6 +57,7 @@ function callHome(){
 	
 	$('#winVenta').on('show.bs.modal', function(event){
 		$("#frmVenta")[0].reset();
+		getFuerza();
 	});
 	
 	$('#winVenta').on('hide.bs.modal', function(event){
@@ -168,63 +172,63 @@ function callHome(){
 			});
 		});
 	}
-}
 
-function sincronizarCatalogos(){
-	$(".navbar-collapse").removeClass("show");
-	blockUI("Estamos obteniendo los datos del servidor");
-	$.post(server + "sincronizacion", {
-		"usuario": objUsuario.idUsuaro,
-		"action": "getCatalogos"
-	}, function(datos){
-		$.each(datos.fuerza, function(i, el){
-			db.transaction(function(tx){
-				tx.executeSql('select * from fuerza where idFuerza = ?', [el.idFuerza], function(tx, results){
-					if(results.rows.length == 0){
-						tx.executeSql('INSERT INTO fuerza (idFuerza, clave, nombre, visible) VALUES (?, ?, ?, ?)', [el.idFuerza, el.clave, el.nombre, el.visible]);
-					}else
-						tx.executeSql('update fuerza set clave = ?, nombre = ?, visible = ? where idFuerza = ?', [el.clave, el.nombre, el.visible, el.idFuerza]);
-				}, errorDB);
-			});
-		});
-		
-		unBlockUI();
-		mensajes.log({"mensaje": "Se actualizaron " + datos.fuerza.length + " datos"});
-	}, "json");
-}
-
-function sincronizarVentas(){
-	$(".navbar-collapse").removeClass("show");
-	db.transaction(function(tx){
-		tx.executeSql('select * from venta where sincronizar = 0', [], function(tx, results){
-			var datos = new Array;
-			
-			for(var i = 0; i < results.rows.length ; i++){
-				datos.push(results.rows.item(i));
-			}
-			var obj = new TVenta;
-			obj.send({
-				ventas: JSON.stringify(datos),
-				usuario: objUsuario.idUsuario,
-				fn: {
-					before: function(){
-						blockUI("Estamos enviando la información al servidor, espera un momento");
-					}, after: function(resp){
-						unBlockUI();
-						if (resp.band){
-							mensajes.alert({"mensaje": "Envió terminado"});
-							db.transaction(function(tx){
-								$.each(resp.ventas, function(i, venta){
-								
-									tx.executeSql('update venta set idVenta = ? where idElemento = ?', [venta.idVenta, venta.idElemento], null, errorDB);
-									console.log(venta);
-								});
-							});
+	function sincronizarCatalogos(){
+		$(".navbar-collapse").removeClass("show");
+		blockUI("Estamos obteniendo los datos del servidor");
+		$.post(server + "sincronizacion", {
+			"usuario": objUsuario.idUsuaro,
+			"action": "getCatalogos"
+		}, function(datos){
+			$.each(datos.fuerza, function(i, el){
+				db.transaction(function(tx){
+					tx.executeSql('select * from fuerza where idFuerza = ?', [el.idFuerza], function(tx, results){
+						if(results.rows.length == 0){
+							tx.executeSql('INSERT INTO fuerza (idFuerza, clave, nombre, visible) VALUES (?, ?, ?, ?)', [el.idFuerza, el.clave, el.nombre, el.visible]);
 						}else
-							mensajes.alert({"titulo": "Error", "mensaje": "Ocurrió un error en el server"});
-					}
-				}
+							tx.executeSql('update fuerza set clave = ?, nombre = ?, visible = ? where idFuerza = ?', [el.clave, el.nombre, el.visible, el.idFuerza]);
+					}, errorDB);
+				});
 			});
-		}, errorDB);
-	});
+			
+			unBlockUI();
+			mensajes.log({"mensaje": "Se actualizaron " + datos.fuerza.length + " datos"});
+		}, "json");
+	}
+	
+	function sincronizarVentas(){
+		$(".navbar-collapse").removeClass("show");
+		db.transaction(function(tx){
+			tx.executeSql('select * from venta where sincronizar = 0', [], function(tx, results){
+				var datos = new Array;
+				
+				for(var i = 0; i < results.rows.length ; i++){
+					datos.push(results.rows.item(i));
+				}
+				var obj = new TVenta;
+				obj.send({
+					ventas: JSON.stringify(datos),
+					usuario: objUsuario.idUsuario,
+					fn: {
+						before: function(){
+							blockUI("Estamos enviando la información al servidor, espera un momento");
+						}, after: function(resp){
+							unBlockUI();
+							if (resp.band){
+								mensajes.alert({"mensaje": "Envió terminado"});
+								db.transaction(function(tx){
+									$.each(resp.ventas, function(i, venta){
+									
+										tx.executeSql('update venta set idVenta = ? where idElemento = ?', [venta.idVenta, venta.idElemento], null, errorDB);
+										console.log(venta);
+									});
+								});
+							}else
+								mensajes.alert({"titulo": "Error", "mensaje": "Ocurrió un error en el server"});
+						}
+					}
+				});
+			}, errorDB);
+		});
+	}
 }
