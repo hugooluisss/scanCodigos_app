@@ -61,6 +61,7 @@ var app = {
 app.initialize();
 
 $(document).ready(function(){
+	//app.onDeviceReady();
 	objUsuario = new TUsuario;
 	if (!objUsuario.isLogin())
 		location.href = "index.html";
@@ -73,8 +74,6 @@ $(document).ready(function(){
 	getPlantillas(function(){
 		callPanel("home");
 	});
-	
-	//app.onDeviceReady();
 });
 
 function callPanel(panel){
