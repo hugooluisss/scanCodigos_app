@@ -1,5 +1,6 @@
 server = "http://dashboard.nomastenencias.com/";
 server = "http://192.168.2.2/scanCodigos/";
+server = "http://192.168.0.8/scanCodigos/";
 //server = "http://localhost/crm_gestor/";
 
 var idUsuario = undefined;
