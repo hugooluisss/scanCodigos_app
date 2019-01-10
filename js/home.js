@@ -71,9 +71,11 @@ $(document).ready(function(){
 	plantillas["itemVenta"] = "";
 	setPanel();
 	
-	getPlantillas(function(){
-		callPanel("home");
-	});
+	setTimeout (function(){
+		getPlantillas(function(){
+			callPanel("home");
+		});
+	}, 2000);
 });
 
 function callPanel(panel){
