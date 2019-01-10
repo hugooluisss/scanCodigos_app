@@ -165,8 +165,8 @@ function crearBD(){
 			console.log("tabla tienda creada");
 		}, errorDB);
 		
-		//tx.executeSql('drop table codigo');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS codigo (idVenta integer primary key, idFuerza integer, fecha datetime, iccid text imei text, dni text, foreign key(idFuerza) references fuerza(idFuerza))', [], function(){
+		//tx.executeSql('drop table venta');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS venta(idElemento integer primary key, idVenta integer, idFuerza integer, fecha datetime, imei text, iccid text imei text, dni text, sincronizar integer default 1, foreign key(idFuerza) references fuerza(idFuerza))', [], function(){
 			console.log("tabla codigos creada");
 		}, errorDB);
 	});

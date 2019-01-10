@@ -19,6 +19,7 @@
 var objUsuario = null;
 var plantillas = {};
 var pantallas = [];
+var db = null;
 
 var app = {
 	// Application Constructor
@@ -37,12 +38,16 @@ var app = {
 	// The scope of 'this' is the event. In order to call the 'receivedEvent'
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
-		activarNotificaciones({
-			fn: {
-				after: function(){
-				}
-			}
-		});
+		try{
+			db = window.sqlitePlugin.openDatabase({name: 'scan.db', location: 1, androidDatabaseImplementation: 2});
+			console.log("Conexión desde phonegap OK");
+			crearBD(db);
+		}catch(err){
+			alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
+			db = window.openDatabase("scan.db", "1.0", "Just a Dummy DB", 200000);
+			crearBD(db);
+			console.log("Se inicio la conexión a la base para web");
+		}
 		
 		document.addEventListener("backbutton", function(){
 			mensajes.confirm({"titulo": "Salir", "mensaje": "¿Seguro de salir?", "botones": ["Salir", "Cancelar"], "funcion": function(resp){
@@ -62,6 +67,7 @@ $(document).ready(function(){
 		
 	
 	plantillas["home"] = "";
+	plantillas["itemVenta"] = "";
 	setPanel();
 	
 	getPlantillas(function(){
