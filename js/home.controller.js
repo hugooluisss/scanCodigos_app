@@ -66,7 +66,12 @@ function callHome(){
 	$("#btnScanIMEI").click(function(){
 		cordova.plugins.barcodeScanner.scan(
 			function (result) {
-				$("#txtIMEI").val(result.text);
+				var s = result.text;
+				for(x = s.length ; x < 15 ; x++){
+					s = "0" + s;
+				}
+				
+				$("#txtIMEI").val(s);
 			}, function (error) {
 				mensajes.log({"mensaje": "Scaneo cancelado"});
 			}, {
@@ -86,7 +91,11 @@ function callHome(){
 	$("#btnScanICCID").click(function(){
 		cordova.plugins.barcodeScanner.scan(
 			function (result) {
-				$("#txtICCID").val(result.text);
+				var s = result.text;
+				for(x = s.length ; x < 19 ; x++){
+					s = "0" + s;
+				}
+				$("#txtICCID").val(s);
 			}, function (error) {
 				mensajes.log({"mensaje": "Scaneo cancelado"});
 			}, {
