@@ -54,6 +54,35 @@ function callHome(){
 		}});
 	});
 	
+	chart = undefined;
+	$('#winEstadistica').on('show.bs.modal', function(event){
+		$(".navbar-collapse").removeClass("show");
+		blockUI("Obteniendo datos del servidor");
+		$.post(server + "cventas", {
+			"action": "getVentasUsuarioMes",
+			"usuario": objUsuario.idUsuario,
+			"movil": true
+		}, function(datos){
+			unBlockUI();
+			console.log(datos);
+			var data = new google.visualization.DataTable();
+			data.addColumn("string", "Día");
+			data.addColumn("number", "Ventas");
+			
+			for(i in datos){
+				el = datos[i];
+				console.log(el);
+				data.addRow([el.dia.toString(), parseInt(el.total)]);
+			}
+			chart.draw(data, {"width": "100%"});
+		}, "json");
+	});
+	
+	google.charts.load("current", {'packages': ['corechart']});
+	google.charts.setOnLoadCallback(function(){
+		chart = new google.visualization.ColumnChart(document.getElementById("dvReporteVentas"));
+	});
+	
 	$('#winVenta').on('show.bs.modal', function(event){
 		$("#frmVenta")[0].reset();
 		getFuerza();
@@ -164,11 +193,14 @@ function callHome(){
 			});
 		}
 	});
+	setTimeout (function(){
+		listaVentas();
+	}, 2000);
 	
-	listaVentas();
 	
 	function listaVentas(){
 		db.transaction(function(tx){
+			console.log("Obteniendo registro de ventas");
 			$("#dvVentas").find(".venta").remove();
 			tx.executeSql('select a.*, b.nombre as fuerza from venta a join fuerza b on a.idFuerza = b.idFuerza', [], function(tx, results){
 				for(var i = 0 ; i < results.rows.length ; i++){
