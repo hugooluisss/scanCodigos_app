@@ -1,4 +1,4 @@
-server = "http://telefoniayenlaces.com.mx/app/";
+server = "http://www.telefoniayenlaces.com.mx/app/";
 //server = "http://192.168.2.2/scanCodigos/";
 //server = "http://192.168.0.8/scanCodigos/";
 //server = "http://localhost/crm_gestor/";

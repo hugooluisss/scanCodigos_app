@@ -43,9 +43,12 @@ var app = {
 app.initialize();
 
 $(document).ready(function(){
+	blockUI("Verificando inicio de sesión");
 	objUsuario = new TUsuario;
 	if (objUsuario.isLogin())
 		location.href = "inicio.html";
+	else
+		unBlockUI();
 		
 	
 	plantillas["index"] = "";
