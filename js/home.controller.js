@@ -104,10 +104,10 @@ function callHome(){
 			}, function (error) {
 				mensajes.log({"mensaje": "Scaneo cancelado"});
 			}, {
-				preferFrontCamera : true, // iOS and Android
-				showFlipCameraButton : true, // iOS and Android
+				preferFrontCamera : false, // iOS and Android
+				showFlipCameraButton : false, // iOS and Android
 				showTorchButton : true, // iOS and Android
-				torchOn: true, // Android, launch with the torch switched on (if available)
+				torchOn: false, // Android, launch with the torch switched on (if available)
 				saveHistory: true, // Android, save scan history (default false)
 				prompt : "Scanea el IMEI", // Android
 				resultDisplayDuration: 50, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
@@ -128,10 +128,10 @@ function callHome(){
 			}, function (error) {
 				mensajes.log({"mensaje": "Scaneo cancelado"});
 			}, {
-				preferFrontCamera : true, // iOS and Android
-				showFlipCameraButton : true, // iOS and Android
+				preferFrontCamera : false, // iOS and Android
+				showFlipCameraButton : false, // iOS and Android
 				showTorchButton : true, // iOS and Android
-				torchOn: true, // Android, launch with the torch switched on (if available)
+				torchOn: false, // Android, launch with the torch switched on (if available)
 				saveHistory: true, // Android, save scan history (default false)
 				prompt : "Scanea el IMEI", // Android
 				resultDisplayDuration: 50, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
