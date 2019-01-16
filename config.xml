@@ -45,7 +45,7 @@
 		<!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
 
 		<!--<plugin name="cordova-plugin-barcodescanner" source="npm"/>-->
-		<plugin spec="https://github.com/Telerik-Verified-Plugins/BarcodeScanner.git" source="git">
+		<plugin spec="phonegap-plugin-barcodescanner" source="git">
 			<param name="CAMERA_USAGE_DESCRIPTION" value="To scan barcodes." />
 		</plugin>
 		<!--<plugin name="cordova.plugins.diagnostic" source="npm" />-->
