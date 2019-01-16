@@ -44,7 +44,7 @@
 		<!-- Third party plugins -->
 		<!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
 
-		<plugin name="phonegap-plugin-barcodescanner" source="npm" spec="7.0.4"/>
+		<plugin name="phonegap-plugin-barcodescanner" source="npm" spec="6.0.0"/>
 		<!--<plugin name="cordova.plugins.diagnostic" source="npm" />-->
 		<plugin name="cordova-plugin-android-permissions" source="npm"/>
 		<plugin name="cordova-plugin-dialogs" source="npm"/>
