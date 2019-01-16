@@ -5,7 +5,7 @@ TVenta = function(){
 		if (datos.fn.before !== undefined) datos.fn.before();
 		
 		var d = new Date();
-		var fecha = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var fecha = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 		
 		db.transaction(function(tx){
 			var result = {};
