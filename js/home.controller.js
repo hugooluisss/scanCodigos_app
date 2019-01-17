@@ -153,7 +153,7 @@ function callHome(){
 			selFuerza: {
 				required: true
 			},
-			txtDNI: {
+			txtDN: {
 				required: true,
 				maxlength: 10,
 				minlength: 10
