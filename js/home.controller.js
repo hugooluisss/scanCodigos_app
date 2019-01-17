@@ -191,7 +191,7 @@ function callHome(){
 						}
 					}
 				});
-			else{
+			}else{
 				mensajes.log({"mensaje": DN + ": Debe de contener 10 caracteres"});
 				$("#txtDN").focus();
 			}
