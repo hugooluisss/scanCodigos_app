@@ -96,10 +96,9 @@ function callHome(){
 		cordova.plugins.barcodeScanner.scan(
 			function (result) {
 				var s = result.text;
-				for(x = s.length ; x < 15 ; x++){
+				if (s.length == 14)
 					s = "0" + s;
-				}
-				
+					
 				$("#txtIMEI").val(s);
 			}, function (error) {
 				mensajes.log({"mensaje": "Scaneo cancelado"});
@@ -121,9 +120,7 @@ function callHome(){
 		cordova.plugins.barcodeScanner.scan(
 			function (result) {
 				var s = result.text;
-				for(x = s.length ; x < 19 ; x++){
-					s = "0" + s;
-				}
+				
 				$("#txtICCID").val(s);
 			}, function (error) {
 				mensajes.log({"mensaje": "Scaneo cancelado"});
@@ -167,8 +164,16 @@ function callHome(){
 		},
 		submitHandler: function(form){
 			form = $(form);
-			
-			if ($("#txtDN").val().length == 10){
+			if ($("#txtICCID").val().length != 19){
+				mensajes.log({"mensaje": "ICCID: Debe de contener 19 caracteres"});
+				$("#txtICCID").focus();
+			}else if ($("#txtIMEI").val().length != 15){
+				mensajes.log({"mensaje": "IEMI: Debe de contener 15 caracteres"});
+				$("#txtIMEI").focus();
+			}else if ($("#txtDN").val().length != 10){
+				mensajes.log({"mensaje": "DN: Debe de contener 10 caracteres"});
+				$("#txtDN").focus();
+			}else{
 				var obj = new TVenta;
 				obj.add({
 					fuerza: form.find("#selFuerza").val(),
@@ -191,9 +196,6 @@ function callHome(){
 						}
 					}
 				});
-			}else{
-				mensajes.log({"mensaje": "DN: Debe de contener 10 caracteres"});
-				$("#txtDN").focus();
 			}
 		}
 	});
