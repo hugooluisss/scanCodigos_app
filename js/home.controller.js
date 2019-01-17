@@ -154,7 +154,9 @@ function callHome(){
 				required: true
 			},
 			txtDNI: {
-				required: true
+				required: true,
+				maxlength: 10,
+				minlength: 10
 			}
 		},
 		wrapper: 'span',
