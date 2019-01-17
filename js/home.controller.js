@@ -168,7 +168,7 @@ function callHome(){
 		submitHandler: function(form){
 			form = $(form);
 			
-			if ($("#txtDN").text().length == 10){
+			if ($("#txtDN").val().length == 10){
 				var obj = new TVenta;
 				obj.add({
 					fuerza: form.find("#selFuerza").val(),
