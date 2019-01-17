@@ -154,12 +154,9 @@ function callHome(){
 				required: true
 			},
 			txtDN: {
-				required: true,
-				maxlength: 10,
-				minlength: 10
+				required: true
 			}
 		},
-		wrapper: 'span',
 		onfocusout: false,
 		showErrors: function(errorMap, errorList) {
 			if (errorList.length > 0){
@@ -171,28 +168,33 @@ function callHome(){
 		submitHandler: function(form){
 			form = $(form);
 			
-			var obj = new TVenta;
-			obj.add({
-				fuerza: form.find("#selFuerza").val(),
-				iccid: form.find("#txtICCID").val(), 
-				imei: form.find("#txtIMEI").val(), 
-				dni: form.find("#txtDN").val(),
-				fn: {
-					before: function(){
-						form.find("[type=submit]").prop("disabled", true);
-					}, after: function(resp){
-						form.find("[type=submit]").prop("disabled", false);
-						
-						if(resp.band){
-							mensajes.log({mensaje: "Venta guardada"});
-							form[0].reset();
-						}else{
-							mensajes.alert({"titulo": "Error", mensaje: "No se pudo registrar la venta"});
-							console.log(resp.error.message);
+			if ($("#txtDN").text().length == 10){
+				var obj = new TVenta;
+				obj.add({
+					fuerza: form.find("#selFuerza").val(),
+					iccid: form.find("#txtICCID").val(), 
+					imei: form.find("#txtIMEI").val(), 
+					dni: form.find("#txtDN").val(),
+					fn: {
+						before: function(){
+							form.find("[type=submit]").prop("disabled", true);
+						}, after: function(resp){
+							form.find("[type=submit]").prop("disabled", false);
+							
+							if(resp.band){
+								mensajes.log({mensaje: "Venta guardada"});
+								form[0].reset();
+							}else{
+								mensajes.alert({"titulo": "Error", mensaje: "No se pudo registrar la venta"});
+								console.log(resp.error.message);
+							}
 						}
 					}
-				}
-			});
+				});
+			else{
+				mensajes.log({"mensaje": DN + ": Debe de contener 10 caracteres"});
+				$("#txtDN").focus();
+			}
 		}
 	});
 	setTimeout (function(){
